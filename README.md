@@ -1,4 +1,4 @@
-android-common-util
+android-dev-framework
 ===================
 
-android common and useful utility functions library
+android common startup development framework

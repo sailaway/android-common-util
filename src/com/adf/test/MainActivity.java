@@ -1,4 +1,4 @@
-package org.android.common.util.test;
+package com.adf.test;
 
 import org.android.common.util.R;
 

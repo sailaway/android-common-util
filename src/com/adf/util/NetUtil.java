@@ -1,4 +1,4 @@
-package org.android.common.util;
+package com.adf.util;
 /**
  * Copyright 2014 sailaway(https://github.com/sailaway)
  *
@@ -8,6 +8,6 @@ package org.android.common.util;
  * of this license document, but changing it is not allowed.
  * 
  */
-public class CommonUtil {
+public class NetUtil {
 
 }

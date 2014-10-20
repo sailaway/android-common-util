@@ -1,4 +1,7 @@
-package org.android.common.util;
+package com.adf.app;
+
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 /**
  * Copyright 2014 sailaway(https://github.com/sailaway)
  *
@@ -8,6 +11,9 @@ package org.android.common.util;
  * of this license document, but changing it is not allowed.
  * 
  */
-public class BitmapUtil {
-
+public abstract class AnimationEndListener implements AnimationListener{
+	@Override
+	public void onAnimationRepeat(Animation animation){};
+	@Override
+	public void onAnimationStart(Animation animation) {}
 }

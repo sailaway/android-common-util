@@ -1,11 +1,12 @@
 *.class
-
+**libleveldbjni.so
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
 # Package Files #
 bin
 gen
+obj
 **Thumbs.db
 .settings/
 

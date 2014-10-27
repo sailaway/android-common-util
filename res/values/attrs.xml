@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TabLayout">
+        <attr name="tab_count" format="integer" />
+        <attr name="tab_split_drawable" format="reference" />
+        <attr name="tab_text_color" format="color" />
+        <attr name="tab_text_size" format="dimension" />
+    </declare-styleable>
+</resources>

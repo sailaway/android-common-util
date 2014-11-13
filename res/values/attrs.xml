@@ -6,4 +6,17 @@
         <attr name="tab_text_color" format="color" />
         <attr name="tab_text_size" format="dimension" />
     </declare-styleable>
+    
+    <declare-styleable name="MoreTitle">
+        <attr name="title_gravity">
+            <enum name="left" value="-1" />
+            <enum name="center" value="-2" />
+        </attr>
+        <attr name="left_drawable" format="reference" />
+        <attr name="right_drawable" format="reference" />
+        <attr name="more_drawable" format="reference" />
+        <attr name="show_more" format="boolean" />
+        <attr name="show_right" format="boolean" />
+        <attr name="show_left" format="boolean" />
+    </declare-styleable>
 </resources>

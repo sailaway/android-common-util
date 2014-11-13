@@ -1,3 +1,12 @@
+/**
+ * Copyright 2014 sailaway(https://github.com/sailaway)
+ *
+ * Licensed under theGNU GENERAL PUBLIC LICENSE Version 3 (the "License");
+ *  Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
+ * Everyone is permitted to copy and distribute verbatim copies
+ * of this license document, but changing it is not allowed.
+ * 
+ */
 package com.adf.app.tab;
 
 import java.util.ArrayList;
@@ -13,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,9 +30,7 @@ import android.widget.TextView;
 import com.adf.app.badge.BadgeView;
 import com.adf.framework.R;
 
-/**
- * TODO add BadgeView
- * */
+
 public class TabLayout extends LinearLayout implements OnClickListener{
 	
 	protected static final int TabBtCellLayoutIdStart = 10001;
@@ -34,6 +42,8 @@ public class TabLayout extends LinearLayout implements OnClickListener{
 	int mTabCount;
 	float mTabTextSize;
 	ColorStateList mTabTextColor;
+	
+	int mCurSelectIdx;
 
 	public TabLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -43,7 +53,9 @@ public class TabLayout extends LinearLayout implements OnClickListener{
 		mTabTextSize = ta.getDimension(R.styleable.TabLayout_tab_text_size, txtSize);
 		mTabCount = ta.getInteger(R.styleable.TabLayout_tab_count, TabCountDefault);
 		mTabTextColor = ta.getColorStateList(R.styleable.TabLayout_tab_text_color);
-
+		if(mTabTextColor == null){
+			mTabTextColor = getResources().getColorStateList(R.color.tab_text_color);
+		}
 		ta.recycle();
 		mTabViews = new ArrayList<ViewGroup>();
 	}
@@ -95,23 +107,62 @@ public class TabLayout extends LinearLayout implements OnClickListener{
 				addView(split,split_lp);
 			}
 		}
+		selectTab(0);
 	}
 	
-	public void showBadgetView(int idx,String txt){
-		showBadgetView(idx, txt, BadgeView.POSITION_TOP_RIGHT);
+	public void showBadgetView(int idx,String txt,boolean animate){
+		showBadgetView(idx, txt, BadgeView.POSITION_TOP_RIGHT,animate,null);
 	}
-	public void showBadgetView(int idx,String txt,int badgePos){
+	public void showBadgetView(int idx,String txt,Animation anim){
+		showBadgetView(idx, txt, BadgeView.POSITION_TOP_RIGHT,true,anim);
+	}
+	private void showBadgetView(int idx,String txt,int badgePos,boolean animate,Animation anim){
 		ViewGroup parent = mTabViews.get(idx);
-		BadgeView badge = new BadgeView(getContext());
+		BadgeView badge = getBadgeView(idx);
+		if(badge == null){			
+			badge = new BadgeView(getContext());
+			parent.addView(badge);
+		}
 		badge.setBadgePosition(badgePos);
-		parent.addView(badge);
 		badge.setText(txt);
-		badge.show();
+		if(anim != null){
+			badge.show(anim);
+		} else {			
+			badge.show(animate);
+		}
 	} 
 	public void showBadgetView(int idx,BadgeView badge){
 		ViewGroup parent = mTabViews.get(idx);
+		BadgeView old = getBadgeView(idx);
+		if(old != null){
+			parent.removeView(old);
+		}
 		parent.addView(badge);
 		badge.show();
+	}
+	
+	public BadgeView getBadgeView(int idx){
+		ViewGroup parent = mTabViews.get(idx);
+		int count = parent.getChildCount();
+		for (int i = 0; i < count; i++) {
+			if(parent.getChildAt(i) instanceof BadgeView){
+				return (BadgeView)parent.getChildAt(i);
+			}
+		}
+		return null;
+	}
+	
+	public void hideBadgetView(int idx,boolean animate){
+		BadgeView badge = getBadgeView(idx);
+		if(badge != null){
+			badge.hide(animate);
+		}
+	}
+	public void hideBadgetView(int idx,Animation anim){
+		BadgeView badge = getBadgeView(idx);
+		if(badge != null){
+			badge.hide(anim);
+		}
 	}
 	
 	public void setOnTabClickListener(AdfOnTabClickListener mListener) {
@@ -127,14 +178,28 @@ public class TabLayout extends LinearLayout implements OnClickListener{
 			setCellSelected(i, false);
 		}
 		setCellSelected(idx, true);
+		mCurSelectIdx = idx;
+	}
+	
+	public void recursionSetSubViewSelect(View v,boolean select){
+		v.setSelected(select);
+		if(v instanceof ViewGroup){
+			ViewGroup g = (ViewGroup)v;
+			for (int i = 0; i < g.getChildCount(); i++) {
+				View child = g.getChildAt(i);
+				recursionSetSubViewSelect(child, select);
+			}
+		}
 	}
 	
 	private void setCellSelected(int idx,boolean selected){
 		ViewGroup childGroup = mTabViews.get(idx);
-		for (int j = 0; j < childGroup.getChildCount(); j++) {
-			childGroup.getChildAt(j).setSelected(false);
-		}
-		childGroup.setSelected(false);
+//		for (int j = 0; j < childGroup.getChildCount(); j++) {
+//			recursionSetSubViewSelect(childGroup.getChildAt(j),false);
+//			//childGroup.getChildAt(j).setSelected(false);
+//		}
+		recursionSetSubViewSelect(childGroup,selected);
+		//childGroup.setSelected(false);
 	}
 
 	@Override
@@ -143,7 +208,9 @@ public class TabLayout extends LinearLayout implements OnClickListener{
 		int idx = id - TabBtCellLayoutIdStart;
 		int count = mTabCount;
 		if(idx >= 0 &&idx < count){
-			selectTab(idx);
+			if(mCurSelectIdx != idx){				
+				selectTab(idx);
+			}
 			if(mListener != null){
 				mListener.onTabClick(idx, v);
 			}

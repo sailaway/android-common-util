@@ -1,4 +1,3 @@
-package com.adf.util;
 /**
  * Copyright 2014 sailaway(https://github.com/sailaway)
  *
@@ -8,6 +7,8 @@ package com.adf.util;
  * of this license document, but changing it is not allowed.
  * 
  */
+package com.adf.util;
+
 public class NetUtil {
 
 }

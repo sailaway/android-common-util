@@ -1,4 +1,13 @@
-package com.adf.db;
+/**
+ * Copyright 2014 sailaway(https://github.com/sailaway)
+ *
+ * Licensed under theGNU GENERAL PUBLIC LICENSE Version 3 (the "License");
+ *  Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
+ * Everyone is permitted to copy and distribute verbatim copies
+ * of this license document, but changing it is not allowed.
+ * 
+ */
+package com.adf.bean;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -154,7 +163,7 @@ public class BeanSearch {
 	 * return a List of ids that fit the assign condition
 	 * 	*/
 	public static List<String> searchByColumnCondition(DB db,AbsBean bean,IColumnCondition condition){
-		List<String> cols = bean.columns();
+		List<String> cols = bean.dbColumns();
 		return searchByColumnCondition(db, bean, cols, condition);
 	}
 	

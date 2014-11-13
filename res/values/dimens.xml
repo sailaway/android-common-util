@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="tab_ct_bt_height">60dp</dimen>
-    <dimen name="tab_ct_bt_img_height">45dp</dimen>
     <dimen name="tab_ct_tv_size">14dp</dimen>
     <dimen name="tab_split_width">2dp</dimen>
+    <dimen name="more_title_text_size">16dp</dimen>
 </resources>

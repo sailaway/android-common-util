@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- xmlns:adf="http://schemas.android.com/apk/res/com.adf.framework" -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:adf="http://schemas.android.com/apk/res/com.adf.framework"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -21,7 +21,7 @@
     	android:textSize="16sp"
     	android:text="@string/app_name"
 	    />
-	<com.adf.app.tab.TabLayout
+	<!-- <com.adf.app.tab.TabLayout
 	    android:id="@+id/tab_ct_bt_layout"
 	    android:layout_width="match_parent"
 	    android:layout_height="@dimen/tab_ct_bt_height"
@@ -31,9 +31,9 @@
 	    adf:tab_text_color="#000"
 	    adf:tab_text_size="@dimen/tab_ct_tv_size"
 	    adf:tab_split_drawable="@drawable/split_img"
-	    android:layout_marginLeft = "10dp"
-	    android:layout_marginRight = "10dp"
-	    android:layout_marginBottom = "10dp"
-	    
-	    />
+	    android:paddingLeft = "6dp"
+	    android:paddingRight = "6dp"
+	    android:paddingBottom = "4dp"
+	    android:background="@android:color/darker_gray"
+	    /> -->
 </LinearLayout>

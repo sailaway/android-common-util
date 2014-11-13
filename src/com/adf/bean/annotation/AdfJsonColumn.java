@@ -7,19 +7,17 @@
  * of this license document, but changing it is not allowed.
  * 
  */
-package com.adf.util;
+package com.adf.bean.annotation;
 
-import android.util.Log;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public class LogUtil {
-
-	public static String TAG = "android-dev-framework";
-	
-	public static final void err(String msg){
-		Log.e(TAG, msg);
-	}
-	public static final void log(String msg){
-		Log.v(TAG, msg);
-	}
+/**
+ * The Interface Column.
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target( { java.lang.annotation.ElementType.FIELD })
+public @interface AdfJsonColumn {
 	
 }

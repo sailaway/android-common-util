@@ -1,7 +1,3 @@
-package com.adf.app;
-
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
 /**
  * Copyright 2014 sailaway(https://github.com/sailaway)
  *
@@ -11,6 +7,11 @@ import android.view.animation.Animation.AnimationListener;
  * of this license document, but changing it is not allowed.
  * 
  */
+package com.adf.app;
+
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+
 public abstract class AnimationEndListener implements AnimationListener{
 	@Override
 	public void onAnimationRepeat(Animation animation){};

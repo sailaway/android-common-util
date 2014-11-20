@@ -64,7 +64,8 @@ public class TabLayout extends LinearLayout implements OnClickListener{
 	}
 
 	public interface AdfOnTabClickListener{
-		public void onTabClick(int idx,View v);
+		public void onTabChanged(int idx,View v);
+		public boolean beforeTabChange(int idx,View v);
 	}
 	
 	protected AdfOnTabClickListener mListener;
@@ -208,11 +209,15 @@ public class TabLayout extends LinearLayout implements OnClickListener{
 		int idx = id - TabBtCellLayoutIdStart;
 		int count = mTabCount;
 		if(idx >= 0 &&idx < count){
-			if(mCurSelectIdx != idx){				
-				selectTab(idx);
+			if(mCurSelectIdx == idx){
+				return;
 			}
+			if(mListener != null && !mListener.beforeTabChange(idx, v)){
+				return;
+			}
+			selectTab(idx);
 			if(mListener != null){
-				mListener.onTabClick(idx, v);
+				mListener.onTabChanged(idx, v);
 			}
 		}
 	}

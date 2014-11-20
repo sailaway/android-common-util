@@ -18,15 +18,24 @@ import com.litl.leveldb.DB;
 /**
  * */
 public class DBInstance {
+	private static final byte[] sync_byte = new byte[0];
+	
 	public static String LevelDBName = "level.db";
 	private static DB db;
+	
+	private static int refCount;
+	
 	private DBInstance(){}
 	public static final DB getInstance(File file){
-		if(db == null){
-			db = new DB(file);
-			db.open();
+		synchronized (sync_byte) {			
+			if(db == null){
+				db = new DB(file);
+				db.open();
+				refCount = 0;
+			}
+			refCount++;
+			return db;
 		}
-		return db;
 	}
 	public static final DB getInstance(Context context){
 		File file = context.getDatabasePath(LevelDBName);
@@ -45,9 +54,14 @@ public class DBInstance {
 	}
 	
 	public static final void destroyInstance(){
-		if(db != null){
-			db.close();
-			db = null;
+		synchronized (sync_byte) {
+			refCount--;
+			if(refCount <= 0){				
+				if(db != null){
+					db.close();
+					db = null;
+				}
+			}
 		}
 	}
 }

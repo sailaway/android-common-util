@@ -44,14 +44,25 @@ import com.litl.leveldb.DB;
  * */
 public abstract class AbsBean {
 	
+	@AdfJsonColumn
 	protected String identify;
 	
 	public AbsBean() {
 		identify = UUID.randomUUID().toString();
 	}
 	
-	public AbsBean(String id){
-		identify = id;
+	/**
+	 * if str is a json string, it will set value as
+	 * else str is a plain string it is ID
+	 * */
+	public AbsBean(String str){
+		try {
+			identify = UUID.randomUUID().toString();
+			JSONObject obj = new JSONObject(str);
+			fromJson(obj);
+		} catch (JSONException e) {
+			identify = str;
+		}
 	}
 	
 	public String tableName(){
@@ -60,6 +71,9 @@ public abstract class AbsBean {
 	}
 	public String getIdentify(){
 		return identify;
+	}
+	public void setIdentify(String id){
+		this.identify = id;
 	}
 	
 	public String joinKeyWithColumnAndIndentify(String column){
@@ -79,6 +93,9 @@ public abstract class AbsBean {
 	}
 	
 	public AbsBean loadFromDbById(DB db,String id) {
+		if(id == null || db == null){
+			return this;
+		}
 		this.identify = id;
 		List<String> columns = dbColumns();
 		for(int i = 0;i<columns.size();i++){
@@ -410,5 +427,11 @@ public abstract class AbsBean {
 			}
 		}
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		JSONObject json = toJson();
+		return json.toString();
 	}
 }

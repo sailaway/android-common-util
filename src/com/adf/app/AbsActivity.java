@@ -10,14 +10,13 @@
 package com.adf.app;
 
 
+import android.app.Activity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
-import com.ab.activity.AbActivity;
 
-
-public abstract class AbsActivity extends AbActivity implements OnClickListener{
+public abstract class AbsActivity extends Activity implements OnClickListener{
 	
 	public void initViews(){}
 	public void setupViews(){}

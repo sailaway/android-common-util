@@ -39,8 +39,8 @@ public abstract class AbsPage implements OnClickListener{
 		FrameLayout fl = new FrameLayout(context);
 		this.mRootView = in.inflate(layoutId, fl, false);
 		this.mContext = context;
-		initViews();
-		setupViews();
+		//initViews();
+		//setupViews();
 	}
 	
 	public View getRootView(){
